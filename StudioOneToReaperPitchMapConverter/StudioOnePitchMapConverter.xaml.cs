@@ -22,7 +22,7 @@ namespace ReadXmlFileTest_WPF
 			InitializeComponent();
 		}
 
-		private void btnOpenFile_Click(object sender, RoutedEventArgs e)
+		private void BtnSelectFiles_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			openFileDialog.Multiselect = true;
@@ -41,13 +41,13 @@ namespace ReadXmlFileTest_WPF
 			CheckAllConvertionConditions();
 		}
 
-		private void ClearList_ButtonClick(object sender, RoutedEventArgs e)
+		private void BtnClearList_Click(object sender, RoutedEventArgs e)
 		{
 			filesToConvert.Clear();
 			listBoxFiles.Items.Clear();
 		}
 
-		private void btnOpenFolder_Click(object sender, RoutedEventArgs e)
+		private void BtnSelectDestinationFolder_Click(object sender, RoutedEventArgs e)
 		{
 			//Source: https://stackoverflow.com/questions/4007882/select-folder-dialog-wpf?rq=1
 			Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog openFolderDialog = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog();
@@ -76,7 +76,7 @@ namespace ReadXmlFileTest_WPF
 			CheckAllConvertionConditions();
 		}
 
-		private void ConvertButton_Click(object sender, RoutedEventArgs e)
+		private void BtnConvertToReaperFormat_Click(object sender, RoutedEventArgs e)
 		{
 			foreach (var filePath in filesToConvert)
 			{
@@ -131,7 +131,7 @@ namespace ReadXmlFileTest_WPF
 				$"The new pitch maps have been saved at the following location: \n\n'{targetFolder}'");
 		}
 
-		private void ConvertToStudioOneFormat(object sender, RoutedEventArgs e)
+		private void BtnConvertToStudioOneFormat(object sender, RoutedEventArgs e)
 		{
 			foreach (var filePath in filesToConvert)
 			{

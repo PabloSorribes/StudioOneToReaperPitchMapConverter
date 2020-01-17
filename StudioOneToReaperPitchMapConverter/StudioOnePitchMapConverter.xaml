@@ -9,8 +9,8 @@
     <Grid>
         <DockPanel Margin="10, 10, 350,10">
             <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
-                <Button x:Name="btnOpenFile" Content="Select files to Convert" Click="btnOpenFile_Click" Height="40" Width="240"/>
-                <Button Content="Clear List" Width="75" Click="ClearList_ButtonClick" Margin="150,10,0,10"/>
+                <Button x:Name="btnOpenFile" Content="Select files to Convert" Click="BtnSelectFiles_Click" Height="40" Width="240"/>
+                <Button Content="Clear List" Width="75" Click="BtnClearList_Click" Margin="150,10,0,10"/>
             </WrapPanel>
             <ListBox Name="listBoxFiles" >
             </ListBox>
@@ -18,10 +18,10 @@
 
         <DockPanel Margin="300,10,10,10">
             <WrapPanel DockPanel.Dock="Top" Margin="25,0,25,10" Height="250" Orientation="Horizontal">
-                <Button x:Name="btnOpenFolder" Click="btnOpenFolder_Click" Content="Select Destination Folder" Height="40" Width="200" Margin="40,0,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="btnOpenFolder" Click="BtnSelectDestinationFolder_Click" Content="Select Destination Folder" Height="40" Width="200" Margin="40,0,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtEditor" Width="260" Margin="10,10,0,0"/>
-                <Button x:Name="ConvertButton" Click="ConvertButton_Click" IsEnabled="False" Content="Convert to Reaper PitchMaps" Height="50" Width="200" Margin="40,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,-1.38"/>
-                <Button x:Name="ConvertButton_ToS1" Click="ConvertToStudioOneFormat" IsEnabled="True" Content="Convert to Studio One PitchMaps" Height="50" Width="200" Margin="40,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,-1.38"/>
+                <Button x:Name="ConvertButton" Click="BtnConvertToReaperFormat_Click" IsEnabled="False" Content="Convert to Reaper PitchMaps" Height="50" Width="200" Margin="40,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,-1.38"/>
+                <Button x:Name="ConvertButton_ToS1" Click="BtnConvertToStudioOneFormat" IsEnabled="True" Content="Convert to Studio One PitchMaps" Height="50" Width="200" Margin="40,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,-1.38"/>
             </WrapPanel>
         </DockPanel>
     </Grid>
