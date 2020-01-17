@@ -20,6 +20,8 @@ namespace ReadXmlFileTest_WPF
 		public StudioOnePitchMapConverter()
 		{
 			InitializeComponent();
+			ConvertButton_ToReaper.IsEnabled = false;
+			ConvertButton_ToS1.IsEnabled = false;
 		}
 
 		private void BtnSelectFiles_Click(object sender, RoutedEventArgs e)
@@ -286,10 +288,12 @@ namespace ReadXmlFileTest_WPF
 			if (Directory.Exists(txtEditor.Text) && filesToConvert.Count > 0)
 			{
 				ConvertButton_ToReaper.IsEnabled = true;
+				ConvertButton_ToS1.IsEnabled = true;
 			}
 			else
 			{
 				ConvertButton_ToReaper.IsEnabled = false;
+				ConvertButton_ToS1.IsEnabled = false;
 			}
 		}
 	}
