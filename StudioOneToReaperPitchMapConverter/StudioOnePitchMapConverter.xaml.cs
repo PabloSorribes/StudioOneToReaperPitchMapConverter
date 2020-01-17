@@ -76,9 +76,36 @@ namespace ReadXmlFileTest_WPF
 			CheckAllConvertionConditions();
 		}
 
+		private List<string> GetSanitizedFilesToConvert(List<string> filesToCheck, string extensionToCheckAgainst)
+		{
+			List<string> sanitizedFiles = new List<string>();
+
+			//Sanitize what files to convert to just get the "Studio One.pitchlist"-files (if user adds wrong type of files for this conversion).
+			foreach (var filePath in filesToCheck)
+			{
+				string fileExtension = Path.GetExtension(filePath);
+				if (fileExtension == extensionToCheckAgainst)
+				{
+					sanitizedFiles.Add(filePath);
+				}
+			}
+
+			return sanitizedFiles;
+		}
+
 		private void BtnConvertToReaperFormat_Click(object sender, RoutedEventArgs e)
 		{
-			foreach (var filePath in filesToConvert)
+			List<string> actualFilesToConvert = GetSanitizedFilesToConvert(filesToConvert, ".pitchlist");
+
+			if (actualFilesToConvert.Count == 0)
+			{
+				string captionTitle = "PitchMap Conversion Info: Studio One --> Reaper";
+				string message = "There are no '.pitchlist'-files in your selection! Can't create Reaper pitchlist-files without any source material.";
+				MessageBox.Show(message, captionTitle);
+				return;
+			}
+
+			foreach (var filePath in actualFilesToConvert)
 			{
 				var xmlFile = XElement.Parse(File.ReadAllText(filePath));
 
@@ -127,13 +154,29 @@ namespace ReadXmlFileTest_WPF
 					Console.WriteLine(Ex.ToString());
 				}
 			}
-			MessageBox.Show($"Converted {filesToConvert.Count} Studio One PitchMaps into Reaper PitchMaps! \n\n" +
-				$"The new pitch maps have been saved at the following location: \n\n'{targetFolder}'");
+
+			string titleCaption = "PitchMap Conversion Info: Studio One --> Reaper";
+			string completedMessage = $"Converted {actualFilesToConvert.Count} 'Studio One PitchMaps' into 'Reaper PitchMaps'! \n\n" +
+				$"The new pitch maps have been saved at the following location: \n\n'{targetFolder}' \n\n" +
+				$"Open the Destination Folder?";
+
+			CompletedConversionMessageBox(completedMessage, titleCaption);
 		}
 
 		private void BtnConvertToStudioOneFormat(object sender, RoutedEventArgs e)
 		{
-			foreach (var filePath in filesToConvert)
+			List<string> actualFilesToConvert = GetSanitizedFilesToConvert(this.filesToConvert, ".txt");
+
+			if (actualFilesToConvert.Count == 0)
+			{
+				string captionTitle = "PitchMap Conversion Info: Reaper --> Studio One";
+				string errorMessage = "There are no '.txt'-files in your selection! Can't create Studio One pitchlist-files without any source material.";
+				MessageBox.Show(errorMessage, captionTitle);
+				return;
+			}
+
+
+			foreach (var filePath in actualFilesToConvert)
 			{
 				var currentFile = File.ReadLines(filePath);
 
@@ -158,11 +201,11 @@ namespace ReadXmlFileTest_WPF
 
 				//Console.WriteLine($"Elements to Write: {pitchNamesList.Count}");
 
-				var fileName = $"{Path.GetFileNameWithoutExtension(filePath)}";
+				string fileName = $"{Path.GetFileNameWithoutExtension(filePath)}";
 
 				try
 				{
-					var newFileName = $"{targetFolder}\\{fileName}.pitchlist";
+					string newFileName = $"{targetFolder}\\{fileName}.pitchlist";
 					if (File.Exists(newFileName))
 					{
 						File.Delete(newFileName);
@@ -206,8 +249,29 @@ namespace ReadXmlFileTest_WPF
 					Console.WriteLine(Ex.ToString());
 				}
 			}
-			MessageBox.Show($"Converted {filesToConvert.Count} Reaper PitchMaps into Studio One PitchMaps! \n\n" +
-				$"The new pitch maps have been saved at the following location: \n\n'{targetFolder}'");
+
+			string titleCaption = "PitchMap Conversion Info: Reaper --> Studio One";
+			string completedMessage = $"Converted {actualFilesToConvert.Count} 'Reaper PitchMaps' into 'Studio One PitchMaps'! \n\n" +
+				$"The new pitch maps have been saved at the following location: \n\n'{targetFolder}' \n\n" +
+				$"Open the Destination Folder?";
+
+			CompletedConversionMessageBox(completedMessage, titleCaption);
+		}
+
+		private void CompletedConversionMessageBox(string completedMessage, string titleCaption)
+		{
+			System.Windows.Forms.MessageBoxButtons buttons = System.Windows.Forms.MessageBoxButtons.YesNo;
+			System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(completedMessage, titleCaption, buttons);
+
+			//Open the 
+			if (result == System.Windows.Forms.DialogResult.Yes)
+			{
+				System.Diagnostics.Process.Start(targetFolder);
+			}
+			else
+			{
+				// Close message box
+			}
 		}
 
 
