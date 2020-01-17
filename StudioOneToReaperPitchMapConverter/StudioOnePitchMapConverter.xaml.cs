@@ -165,7 +165,7 @@ namespace ReadXmlFileTest_WPF
 			CompletedConversionMessageBox(completedMessage, titleCaption);
 		}
 
-		private void BtnConvertToStudioOneFormat(object sender, RoutedEventArgs e)
+		private void BtnConvertToStudioOneFormat_Click(object sender, RoutedEventArgs e)
 		{
 			List<string> actualFilesToConvert = GetSanitizedFilesToConvert(this.filesToConvert, ".txt");
 
