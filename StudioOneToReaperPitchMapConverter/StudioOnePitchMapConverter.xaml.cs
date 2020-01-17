@@ -215,11 +215,11 @@ namespace ReadXmlFileTest_WPF
 		{
 			if (Directory.Exists(txtEditor.Text) && filesToConvert.Count > 0)
 			{
-				ConvertButton.IsEnabled = true;
+				ConvertButton_ToReaper.IsEnabled = true;
 			}
 			else
 			{
-				ConvertButton.IsEnabled = false;
+				ConvertButton_ToReaper.IsEnabled = false;
 			}
 		}
 	}
