@@ -202,10 +202,11 @@ namespace ReadXmlFileTest_WPF
 				//Console.WriteLine($"Elements to Write: {pitchNamesList.Count}");
 
 				string fileName = $"{Path.GetFileNameWithoutExtension(filePath)}";
+				string newFileName = "";
 
 				try
 				{
-					string newFileName = $"{targetFolder}\\{fileName}.pitchlist";
+					newFileName = $"{targetFolder}\\{fileName}.pitchlist";
 					if (File.Exists(newFileName))
 					{
 						File.Delete(newFileName);
@@ -248,6 +249,11 @@ namespace ReadXmlFileTest_WPF
 				{
 					Console.WriteLine(Ex.ToString());
 				}
+
+				//Clean up whitespace for each PitchName item. From '"pitchName" />"' to '"pitchName"/>"'
+				string noWhiteSpaceTextFile = File.ReadAllText(newFileName);
+				noWhiteSpaceTextFile = noWhiteSpaceTextFile.Replace(" />", "/>");
+				File.WriteAllText(newFileName, noWhiteSpaceTextFile);
 			}
 
 			string titleCaption = "PitchMap Conversion Info: Reaper --> Studio One";
